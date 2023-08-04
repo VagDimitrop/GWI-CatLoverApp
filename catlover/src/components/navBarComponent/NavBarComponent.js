@@ -1,17 +1,17 @@
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 
-const Navbar = () => {
+const NavBarComponent = () => {
     return (
             <Nav>
                 <Nav.Item>
-                    <Nav.Link href="/home">Home</Nav.Link>
+                    <Nav.Link className="navbar-link" href="/home">Home</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link href="/favorite">Favorite</Nav.Link>
+                    <Nav.Link className="navbar-link" href="/favorite">Favorite</Nav.Link>
                 </Nav.Item>
             </Nav>
     );
 };
 
-export default Navbar;
+export default NavBarComponent;

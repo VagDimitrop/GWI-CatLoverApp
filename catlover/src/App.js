@@ -1,16 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
-import Navbar from "./components/navBarComponent/navBar";
+import NavBarComponent from "./components/navBarComponent/NavBarComponent";
+import TileComponent from "./components/tileComponent/TileComponent";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Navbar>
-        </Navbar>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <header className="App-header">
+                <NavBarComponent>
+                </NavBarComponent>
+            </header>
+            <TileComponent/>
+        </div>
+    );
 }
 
 export default App;

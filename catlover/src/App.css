@@ -1,7 +1,4 @@
-body{
-  background-color: #D8C4B6;
 
-}
 
 .App {
   text-align: center;
@@ -19,14 +16,14 @@ body{
 }
 
 .App-header {
-  background-color: #F5EFE7;
+  background-color: #FFD9C0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  padding: 20px 0 15px 0;
+  padding: 10px 0 10px 0;
 }
 
 @keyframes App-logo-spin {
@@ -42,13 +39,55 @@ body{
   display: inline-flex;
 }
 
-.nav-link {
+.nav-link.navbar-link {
   color: #4F709C;
   text-decoration: none;
   margin-left: 10px;
   margin-right: 10px;
+  font-size: 20px;
 }
 
 .nav-link:hover{
   color: #213555;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.gallery-container > h1 {
+  margin: 15px 0 15px 0;
+}
+
+.tile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 150px;
+  margin-bottom: 40px;
+  background-color: #CCEEBC;
+  border-radius: 8px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: transform ease 0.5s, box-shadow ease 0.5s;
+}
+
+.tile-container:hover {
+  box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
+  cursor: pointer;
+}
+
+.tile-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  max-height: 120px;
+}
+
+.load-button {
+  margin-top: 20px;
+  padding: 5px 10px 5px 10px;
+  background-color: #FFD9C0;
+  color: #4F709C;
+  border-radius: 8px;
+  border: 2px solid #faba90;
 }
