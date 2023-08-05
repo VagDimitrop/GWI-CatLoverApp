@@ -84,10 +84,16 @@
 }
 
 .load-button {
-  margin-top: 20px;
+  margin: 20px 0 40px 0;
   padding: 5px 10px 5px 10px;
   background-color: #FFD9C0;
   color: #4F709C;
   border-radius: 8px;
   border: 2px solid #faba90;
+}
+
+.load-button:hover {
+  background-color: #faba90;
+  box-shadow: rgba(100, 100, 111, 0.6) 0px 5px 8px 0px;
+  transition: transform ease 0.5s, box-shadow ease 0.5s;
 }

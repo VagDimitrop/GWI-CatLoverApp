@@ -21,6 +21,15 @@ const TileComponent = () => {
         alert(imageUrl);
     };
 
+    const onLoadMoreClick = async () => {
+        try {
+            const response = await axios.get('https://api.thecatapi.com/v1/images/search?limit=10');
+            setCatImages([...catImages, ...response.data]);
+        } catch (error) {
+            console.error('Error fetching cat images:', error);
+        }
+    };
+
     return (
         <div className="gallery-container">
             <h1>Cat Gallery</h1>
@@ -38,7 +47,8 @@ const TileComponent = () => {
                     ))}
                 </div>
             </div>
-            <button className="load-button">Load more furry friends!</button>
+            <button className="load-button"
+                    onClick={() => onLoadMoreClick()}>Load more furry friends!</button>
         </div>
     );
 };
