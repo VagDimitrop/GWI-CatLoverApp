@@ -2,14 +2,17 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import Modal from 'react-modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons';
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
+
 
 const TileComponent = () => {
     const [catData, setCatImages] = useState([]);
     const [showModal, toggleModal] = useState();
     const [modalData, setModalData] = useState([]);
     const [URLCopied, copyUrlToClipboard] = useState(false);
-
-
+    const [isFavorite, setIsFavorite] = useState(false);
 
     const APIKey = 'live_Lel5oW8x7PrQ6TPSOIC2XyoQB9SSfzd4uHE4ukbENfzdOxbO3f1ojNv13BAKUHyj'
 
@@ -31,7 +34,8 @@ const TileComponent = () => {
             let selectedEntryData = {
                 url : data.url,
                 breed : data.breeds[0].name,
-                description: data.breeds[0].description
+                description: data.breeds[0].description,
+                imageId: data.id
             }
             setModalData(selectedEntryData)
             toggleModal(true);
@@ -47,7 +51,8 @@ const TileComponent = () => {
 
     const onLoadMoreClick = async () => {
         try {
-            const response = await axios.get('https://api.thecatapi.com/v1/images/search?limit=10');
+            const response = await axios.get('https://api.thecatapi.com/v1/images/search?limit=10',
+                { headers: { 'x-api-key': APIKey } });
             setCatImages([...catData, ...response.data]);
         } catch (error) {
             console.error('Error fetching cat images:', error);
@@ -75,6 +80,21 @@ const TileComponent = () => {
             .catch((err) => {
                 console.log(err);
             });
+    }
+
+    const handleFavoriteClick = async (imageId) => {
+        const payload = {
+            image_id: imageId,
+            sub_id: "44"
+        };
+            try {
+                const response = await axios.post('https://api.thecatapi.com/v1/favourites',
+                    payload,
+                    {headers: {'x-api-key': APIKey}});
+                setIsFavorite(true);
+            } catch (error) {
+                console.error('Error fetching cat images:', error);
+            }
     }
 
 
@@ -125,7 +145,8 @@ const TileComponent = () => {
                 <h2 className="modal-header">{modalData.breed}</h2>
                 <div className="container">
                     <div className="image-container">
-                        <img src={modalData.url} alt="Cat"/>
+                        <img src={modalData.url} alt="Cat"/>{}
+                        <FontAwesomeIcon icon={isFavorite ? faHeartSolid : faHeartRegular} onClick={ () => handleFavoriteClick(modalData.imageId)}/>
                     </div>
                     <div className="details-container">
                         <span className="breed-details">{modalData.description}</span>

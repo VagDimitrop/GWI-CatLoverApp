@@ -111,6 +111,15 @@
     margin: auto;
 }
 
+.image-container > svg{
+    display: block;
+    margin: 10px auto;
+}
+
+.image-container > svg:hover{
+    cursor: pointer;
+}
+
 .details-container {
     margin-top: 20px;
 }
