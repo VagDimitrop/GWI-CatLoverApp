@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import ModalComponent from "../modalComponent/ModalComponent";
 import InfoModal from "../infoModal/InfoModal";
+import ConfirmModal from "../confirmModal/ConfirmModal";
 
 const TileComponent = (props) => {
     const {catData} = props;
     const [modalData, setModalData] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
+    const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false);
 
 
     const onTileClick = (data) => {
@@ -23,6 +25,8 @@ const TileComponent = (props) => {
             setModalIsOpen(true)
         } else if (window.location.pathname === '/home') {
             setInfoModalIsOpen(true)
+        } else if (window.location.pathname === '/favorites') {
+            setConfirmModalIsOpen(true);
         }
     };
 
@@ -34,6 +38,9 @@ const TileComponent = (props) => {
         setInfoModalIsOpen(false);
     };
 
+    const closeConfirmModal = (event) => {
+        setConfirmModalIsOpen(false);
+    };
 
     return (
         <div>
@@ -62,6 +69,10 @@ const TileComponent = (props) => {
                 isInfoModalOpen={infoModalIsOpen}
                 closeModal={closeInfoModal}>
             </InfoModal>
+            <ConfirmModal
+                isConfirmModalOpen={confirmModalIsOpen}
+                closeModal={closeConfirmModal}>
+            </ConfirmModal>
         </div>
     );
 };

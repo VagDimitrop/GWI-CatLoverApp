@@ -15,7 +15,7 @@ const FavoritesPage = () => {
                     params: {sub_id: 44},
                     headers: {'x-api-key': APIKey}
                 });
-                
+
                 setFavorites(transformData(response.data));
             } catch (error) {
                 console.error('Error fetching cat images:', error);
@@ -38,8 +38,13 @@ const FavoritesPage = () => {
 
     return (
         <div>
+            <div className="page-header-container">
+                <h1 className="page-header">Your favorite cat images</h1>
+                <span className="page-text">By clicking on the image, you can remove the image from your favorites</span>
+            </div>
             <TileComponent
-                catData={favoritesData}/>
+                catData={favoritesData}
+            />
         </div>
     );
 };

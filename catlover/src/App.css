@@ -159,6 +159,7 @@
 }
 
 .button-container {
+    display: flex;
     position: absolute;
     bottom: 0px;
     width: 100%;
