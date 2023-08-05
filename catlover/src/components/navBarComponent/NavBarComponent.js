@@ -8,7 +8,7 @@ const NavBarComponent = () => {
                     <Nav.Link className="navbar-link" href="/home">Home</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link className="navbar-link" href="/favorite">Favorite</Nav.Link>
+                    <Nav.Link className="navbar-link" href="/favorites">Favorite</Nav.Link>
                 </Nav.Item>
             </Nav>
     );
