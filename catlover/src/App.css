@@ -98,6 +98,49 @@
     transition: transform ease 0.5s, box-shadow ease 0.5s;
 }
 
+.ReactModal__Content > .modal-header {
+    justify-content: center;
+    color: #faba90;
+}
+
+.image-container > img{
+    width: 230px;
+    height: 170px;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+}
+
+.details-container {
+    margin-top: 20px;
+}
+
+.breed-details {
+    color: #ab8463;
+}
+
+.copy-container {
+    margin-top: 20px;
+}
+
+.copy-container > span {
+    color: #ab8463;
+    display: block;
+    text-align: center;
+    margin: 10px 0 10px 0;
+}
+
+.copy-container > button.copy-url-button {
+    margin-top: 10px;
+}
+
+.button-container {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    margin: 20px -20px;
+}
+
 .ReactModal__Content button {
     margin: 20px 0 40px 0;
     padding: 5px 10px 5px 10px;
@@ -105,6 +148,8 @@
     color: #4F709C;
     border-radius: 8px;
     border: 2px solid #faba90;
+    display: block;
+    margin: auto;
 }
 
 .ReactModal__Content button:hover {
