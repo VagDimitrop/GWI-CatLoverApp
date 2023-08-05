@@ -1,18 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
-import Modal from 'react-modal';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons';
-import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
-
+import ModalComponent from "../modalComponent/ModalComponent";
 
 const TileComponent = () => {
     const [catData, setCatImages] = useState([]);
-    const [showModal, toggleModal] = useState();
     const [modalData, setModalData] = useState([]);
-    const [URLCopied, copyUrlToClipboard] = useState(false);
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
 
     const APIKey = 'live_Lel5oW8x7PrQ6TPSOIC2XyoQB9SSfzd4uHE4ukbENfzdOxbO3f1ojNv13BAKUHyj'
 
@@ -32,22 +27,22 @@ const TileComponent = () => {
     const onTileClick = (data) => {
         if (data.breeds.length) {
             let selectedEntryData = {
+                showModal: true,
                 url : data.url,
                 breed : data.breeds[0].name,
                 description: data.breeds[0].description,
                 imageId: data.id
             }
-            setModalData(selectedEntryData)
-            toggleModal(true);
+            setModalData(selectedEntryData);
+            setModalIsOpen(true)
         } else {
             alert('This furry friend is of no known breed');
         }
     };
 
-
-    const onCloseModalClick = () => {
-        toggleModal(false);
-    }
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
 
     const onLoadMoreClick = async () => {
         try {
@@ -57,60 +52,6 @@ const TileComponent = () => {
         } catch (error) {
             console.error('Error fetching cat images:', error);
         }
-    };
-
-    async function copyTextToClipboard(text) {
-        if ('clipboard' in navigator) {
-            return await navigator.clipboard.writeText(text);
-        } else {
-            return document.execCommand('copy', true, text);
-        }
-    }
-
-    const handleCopyClick = (copyText) => {
-        // Asynchronously call copyTextToClipboard
-        copyTextToClipboard(copyText)
-            .then(() => {
-                // If successful, update the isCopied state value
-                copyUrlToClipboard(true);
-                setTimeout(() => {
-                    copyUrlToClipboard(false);
-                }, 1500);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
-
-    const handleFavoriteClick = async (imageId) => {
-        const payload = {
-            image_id: imageId,
-            sub_id: "44"
-        };
-            try {
-                const response = await axios.post('https://api.thecatapi.com/v1/favourites',
-                    payload,
-                    {headers: {'x-api-key': APIKey}});
-                setIsFavorite(true);
-            } catch (error) {
-                console.error('Error fetching cat images:', error);
-            }
-    }
-
-
-    const modalStyles = {
-        content: {
-            width: '50%',
-            height: '60%',
-            position: 'absolute',
-            top: '20%',
-            left: '25%',
-            borderRadius: '8px',
-            backgroundColor: 'rgba(250, 240, 215, 1)'
-        },
-        overlay: {
-            backgroundColor: 'rgb(91, 86, 70, 0.45)'
-        },
     };
 
     return (
@@ -136,31 +77,11 @@ const TileComponent = () => {
                     onClick={() => onLoadMoreClick()}>Load more furry friends!
             </button>
         </div>
-            <Modal
-                isOpen={showModal}
-                contentLabel="Minimal Modal Example"
-                appElement={document.getElementById('root')}
-                style={modalStyles}>
-
-                <h2 className="modal-header">{modalData.breed}</h2>
-                <div className="container">
-                    <div className="image-container">
-                        <img src={modalData.url} alt="Cat"/>{}
-                        <FontAwesomeIcon icon={isFavorite ? faHeartSolid : faHeartRegular} onClick={ () => handleFavoriteClick(modalData.imageId)}/>
-                    </div>
-                    <div className="details-container">
-                        <span className="breed-details">{modalData.description}</span>
-                    </div>
-                </div>
-                <div className="copy-container">
-                    <span>Do you want to share this image?</span>
-                    <span>Click on the button below to copy the image and share it with your friends</span>
-                    <button className="copy-url-button" onClick={() => handleCopyClick(modalData.url)}>Copy image url</button>
-                </div>
-                <div className="button-container">
-                    <button onClick={() => onCloseModalClick()}>Close</button>
-                </div>
-            </Modal>
+            <ModalComponent
+                data={modalData}
+                isModalOpen={modalIsOpen}
+                closeModal={closeModal}>
+            </ModalComponent>
         </div>
     );
 };
