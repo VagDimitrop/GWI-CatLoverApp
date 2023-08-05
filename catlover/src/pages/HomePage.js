@@ -31,9 +31,12 @@ const HomePage = () => {
 
     return (
         <div>
+            <div className="page-header-container">
+                <h1 className="page-header">Cat Gallery</h1>
+            </div>
             <TileComponent
-                catData={catData}/>
-
+                catData={catData}
+            />
             <button className="load-button"
                     onClick={() => onLoadMoreClick()}>Load more furry friends!
             </button>

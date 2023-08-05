@@ -52,8 +52,16 @@
     cursor: pointer;
 }
 
-.gallery-container > h1 {
-    margin: 15px 0 15px 0;
+.page-header-container {
+    margin-bottom: 20px;
+}
+
+.page-header {
+    color: #ab8463;
+}
+
+.page-text {
+    color: #ab8463;
 }
 
 .tile-container {
@@ -98,7 +106,7 @@
     transition: transform ease 0.5s, box-shadow ease 0.5s;
 }
 
-.ReactModal__Content > .modal-header {
+.ReactModal__Content > .container .modal-header {
     justify-content: center;
     color: #faba90;
 }
@@ -126,6 +134,13 @@
 
 .breed-details {
     color: #ab8463;
+}
+
+.no-breed-info {
+    display: flex;
+    justify-content: center;
+    color: #ab8463;
+    margin-top: 20px;
 }
 
 .copy-container {

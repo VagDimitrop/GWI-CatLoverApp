@@ -75,8 +75,8 @@ const ModalComponent = (props) => {
             appElement={document.getElementById('root')}
             style={modalStyles}>
 
-            <h2 className="modal-header">{data.breed}</h2>
             <div className="container">
+                <h2 className="modal-header">{data.breed}</h2>
                 <div className="image-container">
                     <img src={data.url} alt="Cat"/>{}
                     <FontAwesomeIcon icon={isFavorite ? faHeartSolid : faHeartRegular} onClick={ () => handleFavoriteClick(data.imageId)}/>

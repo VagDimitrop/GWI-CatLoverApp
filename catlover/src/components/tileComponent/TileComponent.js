@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import ModalComponent from "../modalComponent/ModalComponent";
+import InfoModal from "../infoModal/InfoModal";
 
 const TileComponent = (props) => {
     const {catData} = props;
     const [modalData, setModalData] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
+
 
     const onTileClick = (data) => {
-        if (data.breeds.length) {
+        if (data.breeds && data.breeds.length && window.location.pathname === '/home') {
             let selectedEntryData = {
                 showModal: true,
                 url: data.url,
@@ -19,8 +21,8 @@ const TileComponent = (props) => {
             }
             setModalData(selectedEntryData);
             setModalIsOpen(true)
-        } else {
-            alert('This furry friend is of no known breed');
+        } else if (window.location.pathname === '/home') {
+            setInfoModalIsOpen(true)
         }
     };
 
@@ -28,10 +30,14 @@ const TileComponent = (props) => {
         setModalIsOpen(false);
     };
 
+    const closeInfoModal = () => {
+        setInfoModalIsOpen(false);
+    };
+
+
     return (
         <div>
             <div className="gallery-container">
-                <h1>Cat Gallery</h1>
                 <div className="container">
                     <div className="row">
                         {catData.map((data) => (
@@ -52,6 +58,10 @@ const TileComponent = (props) => {
                 isModalOpen={modalIsOpen}
                 closeModal={closeModal}>
             </ModalComponent>
+            <InfoModal
+                isInfoModalOpen={infoModalIsOpen}
+                closeModal={closeInfoModal}>
+            </InfoModal>
         </div>
     );
 };
