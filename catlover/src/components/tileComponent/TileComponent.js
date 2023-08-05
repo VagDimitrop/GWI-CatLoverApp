@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
+import Modal from 'react-modal';
 
 const TileComponent = () => {
     const [catImages, setCatImages] = useState([]);
+    const [showModal, toggleModal] = useState();
 
     useEffect(() => {
         const fetchCatImages = async () => {
@@ -17,9 +19,13 @@ const TileComponent = () => {
         fetchCatImages();
     }, []);
 
-    const onTileClick = (imageUrl) => {
-        alert(imageUrl);
+    const onTileClick = () => {
+        toggleModal(true);
     };
+
+    const onCloseModalClick = () => {
+        toggleModal(false);
+    }
 
     const onLoadMoreClick = async () => {
         try {
@@ -30,7 +36,21 @@ const TileComponent = () => {
         }
     };
 
+    const modalStyles = {
+        content: {
+            width: '40%',
+            height: '40%',
+            position: 'absolute',
+            top: '30%',
+            left: '30%',
+        },
+        overlay: {
+            backgroundColor: 'rgb(91, 86, 70, 0.45)'
+        },
+    };
+
     return (
+        <div>
         <div className="gallery-container">
             <h1>Cat Gallery</h1>
             <div className="container">
@@ -49,6 +69,15 @@ const TileComponent = () => {
             </div>
             <button className="load-button"
                     onClick={() => onLoadMoreClick()}>Load more furry friends!</button>
+        </div>
+            <Modal
+                isOpen={showModal}
+                contentLabel="Minimal Modal Example"
+                appElement={document.getElementById('root')}
+                style={modalStyles}
+            >
+                <button onClick={() => onCloseModalClick()}>Close Modal</button>
+            </Modal>
         </div>
     );
 };
