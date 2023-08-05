@@ -43,7 +43,9 @@ const TileComponent = (props) => {
     };
 
     const closeConfirmModal = (event) => {
-        deleteCallback(modalData);
+        if (event === 'submit') {
+            deleteCallback(modalData);
+        }
         setConfirmModalIsOpen(false);
     };
 
