@@ -5,7 +5,7 @@ import InfoModal from "../infoModal/InfoModal";
 import ConfirmModal from "../confirmModal/ConfirmModal";
 
 const TileComponent = (props) => {
-    const {catData} = props;
+    const {catData, deleteCallback, headerText, descriptionText} = props;
     const [modalData, setModalData] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
@@ -26,6 +26,10 @@ const TileComponent = (props) => {
         } else if (window.location.pathname === '/home') {
             setInfoModalIsOpen(true)
         } else if (window.location.pathname === '/favorites') {
+            let selectedEntryData = {
+                id : data.id
+            }
+            setModalData(selectedEntryData);
             setConfirmModalIsOpen(true);
         }
     };
@@ -39,6 +43,7 @@ const TileComponent = (props) => {
     };
 
     const closeConfirmModal = (event) => {
+        deleteCallback(modalData);
         setConfirmModalIsOpen(false);
     };
 
@@ -66,6 +71,8 @@ const TileComponent = (props) => {
                 closeModal={closeModal}>
             </ModalComponent>
             <InfoModal
+                headerText={headerText}
+                descriptionText={descriptionText}
                 isInfoModalOpen={infoModalIsOpen}
                 closeModal={closeInfoModal}>
             </InfoModal>

@@ -36,6 +36,8 @@ const HomePage = () => {
             </div>
             <TileComponent
                 catData={catData}
+                headerText={'Oops'}
+                descriptionText={'This kitten is of no know breed unfortunately..'}
             />
             <button className="load-button"
                     onClick={() => onLoadMoreClick()}>Load more furry friends!
