@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import TileComponent from "../components/tileComponent/TileComponent";
 import axios from "axios";
 import {APIKey, BaseUrl} from '../Constants';
-import { useLocation } from "react-router-dom";
 import ModalComponent from "../components/modalComponent/ModalComponent";
+import InfoModal from "../components/infoModal/InfoModal";
 
 
 const HomePage = (props) => {
@@ -11,6 +11,7 @@ const HomePage = (props) => {
     const [catData, setCatImages] = useState([]);
     const [modalData, setModalData] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
 
 
     useEffect(() => {
@@ -49,6 +50,14 @@ const HomePage = (props) => {
         setModalIsOpen(false);
     };
 
+    const shouldShowInfoModal = () => {
+        setInfoModalIsOpen(true)
+    }
+
+    const closeInfoModal = () => {
+        setInfoModalIsOpen(false);
+    };
+
     return (
         <div>
             <div className="page-header-container">
@@ -56,14 +65,19 @@ const HomePage = (props) => {
             </div>
             <TileComponent
                 catData={catData}
-                headerText={'Oops'}
-                descriptionText={'This kitten is of no know breed unfortunately..'}
                 isLoadingCallback={isLoadingCallback}
                 shouldShowModal={shouldShowModal}
+                shouldShowInfoModal={shouldShowInfoModal}
             />
             <button className="load-button"
                     onClick={() => onLoadMoreClick()}>Load more furry friends!
             </button>
+            <InfoModal
+                headerText={'Oops'}
+                descriptionText={'This kitten is of no know breed unfortunately..'}
+                isInfoModalOpen={infoModalIsOpen}
+                closeModal={closeInfoModal}>
+            </InfoModal>
             <ModalComponent
                 catData={modalData}
                 isModalOpen={modalIsOpen}

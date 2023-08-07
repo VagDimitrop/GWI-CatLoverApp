@@ -3,12 +3,16 @@ import axios from "axios";
 import TileComponent from "../components/tileComponent/TileComponent";
 import InfoModal from "../components/infoModal/InfoModal";
 import {APIKey, BaseUrl, sub_id} from '../Constants';
+import ConfirmModal from "../components/confirmModal/ConfirmModal";
 
 
 const FavoritesPage = (props) => {
     const {isLoadingCallback} = props;
     const [favoritesData, setFavorites] = useState([]);
     const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
+    const [modalData, setModalData] = useState([]);
+    const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false);
+
 
     useEffect(() => {
         isLoadingCallback(true);
@@ -55,6 +59,18 @@ const FavoritesPage = (props) => {
         }
     }
 
+    const shouldShowModal = (data) => {
+        setModalData(data);
+        setConfirmModalIsOpen(true)
+    }
+
+    const closeConfirmModal = (event) => {
+        if (event === 'submit') {
+            deleteFavorite(modalData);
+        }
+        setConfirmModalIsOpen(false);
+    };
+
     const closeInfoModal = () => {
         setInfoModalIsOpen(false);
     };
@@ -68,6 +84,7 @@ const FavoritesPage = (props) => {
             <TileComponent
                 catData={favoritesData}
                 deleteCallback={deleteFavorite}
+                shouldShowModal={shouldShowModal}
             />
             <InfoModal
                 headerText={'Pity..'}
@@ -75,6 +92,10 @@ const FavoritesPage = (props) => {
                 isInfoModalOpen={infoModalIsOpen}
                 closeModal={closeInfoModal}>
             </InfoModal>
+            <ConfirmModal
+                isConfirmModalOpen={confirmModalIsOpen}
+                closeModal={closeConfirmModal}>
+            </ConfirmModal>
         </div>
     );
 };
