@@ -6,7 +6,7 @@ import {faHeart as faHeartRegular} from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 
 const ModalComponent = (props) => {
-    const { data, isModalOpen, closeModal } = props;
+    const { data, isModalOpen, closeModal, isLoadingCallback } = props;
     const [URLCopied, copyUrlToClipboard] = useState(false);
     const [showModal, toggleModal] = useState();
     const [isFavorite, setIsFavorite] = useState(false);
@@ -33,13 +33,17 @@ const ModalComponent = (props) => {
             image_id: imageId,
             sub_id: "44"
         };
-        try {
-            const response = await axios.post('https://api.thecatapi.com/v1/favourites',
-                payload,
-                {headers: {'x-api-key': APIKey}});
-            setIsFavorite(true);
-        } catch (error) {
-            console.error('Error fetching cat images:', error);
+        if (!isFavorite) {
+            isLoadingCallback(true);
+            try {
+                const response = await axios.post('https://api.thecatapi.com/v1/favourites',
+                    payload,
+                    {headers: {'x-api-key': APIKey}});
+                isLoadingCallback(false);
+                setIsFavorite(true);
+            } catch (error) {
+                console.error('Error fetching cat images:', error);
+            }
         }
     }
 

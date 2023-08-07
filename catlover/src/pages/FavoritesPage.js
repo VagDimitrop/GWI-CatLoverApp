@@ -3,7 +3,8 @@ import axios from "axios";
 import TileComponent from "../components/tileComponent/TileComponent";
 import InfoModal from "../components/infoModal/InfoModal";
 
-const FavoritesPage = () => {
+const FavoritesPage = (props) => {
+    const {isLoadingCallback} = props;
     const [favoritesData, setFavorites] = useState([]);
     const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
 
@@ -12,14 +13,15 @@ const FavoritesPage = () => {
 
 
     useEffect(() => {
+        isLoadingCallback(true);
         const fetchFavorites = async () => {
             try {
                     const response = await axios.get('https://api.thecatapi.com/v1/favourites', {
                     params: {sub_id: 44},
                     headers: {'x-api-key': APIKey}
                 });
-
                 setFavorites(transformData(response.data));
+                isLoadingCallback(false);
             } catch (error) {
                 console.error('Error fetching cat images:', error);
             }
@@ -41,13 +43,14 @@ const FavoritesPage = () => {
 
     const deleteFavorite = async (data) => {
         let id = data.id
-
+        isLoadingCallback(true);
         try {
             const response = await axios.delete('https://api.thecatapi.com/v1/favourites/' + id, {
                 headers: {'x-api-key': APIKey}
             });
             let updatedArray = favoritesData.filter(((element) => element.id !== id));
             setFavorites(updatedArray);
+            isLoadingCallback(false);
             setInfoModalIsOpen(true);
         } catch (error) {
             console.error('Error fetching cat images:', error);

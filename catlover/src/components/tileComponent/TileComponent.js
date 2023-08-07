@@ -5,7 +5,7 @@ import InfoModal from "../infoModal/InfoModal";
 import ConfirmModal from "../confirmModal/ConfirmModal";
 
 const TileComponent = (props) => {
-    const {catData, deleteCallback, headerText, descriptionText} = props;
+    const {catData, deleteCallback, headerText, descriptionText, isLoadingCallback} = props;
     const [modalData, setModalData] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
@@ -70,7 +70,8 @@ const TileComponent = (props) => {
             <ModalComponent
                 data={modalData}
                 isModalOpen={modalIsOpen}
-                closeModal={closeModal}>
+                closeModal={closeModal}
+                isLoadingCallback={isLoadingCallback}>
             </ModalComponent>
             <InfoModal
                 headerText={headerText}
