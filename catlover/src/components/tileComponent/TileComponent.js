@@ -1,11 +1,8 @@
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import InfoModal from "../infoModal/InfoModal";
-import ConfirmModal from "../confirmModal/ConfirmModal";
 
 const TileComponent = (props) => {
-    const {catData, deleteCallback, headerText, descriptionText, breedData, breedImages, fetchImages, shouldShowModal, shouldShowInfoModal} = props;
-    const [modalData, setModalData] = useState([]);
+    const {catData, breedData, fetchImages, shouldShowModal, shouldShowInfoModal} = props;
 
     const onTileClick = (data) => {
         if (window.location.pathname === '/home') {
