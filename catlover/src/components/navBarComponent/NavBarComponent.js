@@ -10,6 +10,9 @@ const NavBarComponent = () => {
                 <Nav.Item>
                     <Nav.Link className="navbar-link" href="/favorites">Favorite</Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link className="navbar-link" href="/breeds">Breeds</Nav.Link>
+                </Nav.Item>
             </Nav>
     );
 };
