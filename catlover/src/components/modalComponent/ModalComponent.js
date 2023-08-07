@@ -7,11 +7,9 @@ import axios from "axios";
 import {APIKey, BaseUrl} from "../../Constants";
 
 const ModalComponent = (props) => {
-    const { data, isModalOpen, closeModal, isLoadingCallback } = props;
+    const { catData, isModalOpen, closeModal, isLoadingCallback, breedData } = props;
     const [URLCopied, copyUrlToClipboard] = useState(false);
-    const [showModal, toggleModal] = useState();
     const [isFavorite, setIsFavorite] = useState(false);
-
 
     const modalStyles = {
         content: {
@@ -72,33 +70,54 @@ const ModalComponent = (props) => {
             });
     }
 
-    return (
-        <Modal
-            isOpen={isModalOpen}
-            contentLabel="Minimal Modal Example"
-            appElement={document.getElementById('root')}
-            style={modalStyles}>
+    if (catData) {
+        return (
+            <Modal
+                isOpen={isModalOpen}
+                contentLabel="Minimal Modal Example"
+                appElement={document.getElementById('root')}
+                style={modalStyles}>
 
-            <div className="container">
-                <h2 className="modal-header">{data.breed}</h2>
-                <div className="image-container">
-                    <img src={data.url} alt="Cat"/>{}
-                    <FontAwesomeIcon icon={isFavorite ? faHeartSolid : faHeartRegular} onClick={ () => handleFavoriteClick(data.imageId)}/>
+                <div className="container">
+                    <h2 className="modal-header">{catData.breed}</h2>
+                    <div className="image-container">
+                        <img src={catData.url} alt="Cat"/>{}
+                        <FontAwesomeIcon icon={isFavorite ? faHeartSolid : faHeartRegular}
+                                         onClick={() => handleFavoriteClick(catData.imageId)}/>
+                    </div>
+                    <div className="details-container">
+                        <span className="breed-details">{catData.description}</span>
+                    </div>
                 </div>
-                <div className="details-container">
-                    <span className="breed-details">{data.description}</span>
+                <div className="copy-container">
+                    <span>Do you want to share this image?</span>
+                    <span>Click on the button below to copy the image and share it with your friends</span>
+                    <button className="copy-url-button" onClick={() => handleCopyClick(catData.url)}>Copy image url
+                    </button>
                 </div>
-            </div>
-            <div className="copy-container">
-                <span>Do you want to share this image?</span>
-                <span>Click on the button below to copy the image and share it with your friends</span>
-                <button className="copy-url-button" onClick={() => handleCopyClick(data.url)}>Copy image url</button>
-            </div>
-            <div className="button-container">
-                <button onClick={() => onCloseModalClick()}>Close</button>
-            </div>
-        </Modal>
-    );
+                <div className="button-container">
+                    <button onClick={() => onCloseModalClick()}>Close</button>
+                </div>
+            </Modal>
+        );
+    } else if (breedData) {
+        return (
+            <Modal
+                isOpen={isModalOpen}
+                contentLabel="Minimal Modal Example"
+                appElement={document.getElementById('root')}
+                style={modalStyles}>
+
+                <div className="container">
+                    <h2 className="modal-header">{breedData.breed}</h2>
+                    <div className="details-container">
+                        <span className="breed-details">{breedData.description}</span>
+                    </div>
+                </div>
+
+            </Modal>
+        )
+    }
 };
 
 export default ModalComponent;
