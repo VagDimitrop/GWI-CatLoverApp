@@ -5,11 +5,13 @@ import {faHeart as faHeartSolid} from "@fortawesome/free-solid-svg-icons";
 import {faHeart as faHeartRegular} from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 import {APIKey, BaseUrl} from "../../Constants";
+import {useNavigate} from "react-router-dom";
 
 const ModalComponent = (props) => {
     const {catData, isModalOpen, closeModal, isLoadingCallback, breedData, breedImages} = props;
     const [URLCopied, copyUrlToClipboard] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
+    const navigate = useNavigate();
 
     const modalStyles = {
         content: {
@@ -70,6 +72,9 @@ const ModalComponent = (props) => {
             });
     }
 
+    const navigateToBreedsDetails = () => {
+        navigate("/breeds");
+    }
     if (catData) {
         return (
             <Modal
@@ -96,6 +101,7 @@ const ModalComponent = (props) => {
                     </button>
                 </div>
                 <div className="button-container">
+                    <button onClick={navigateToBreedsDetails}>See more breeds</button>
                     <button onClick={() => onCloseModalClick()}>Close</button>
                 </div>
             </Modal>
