@@ -194,3 +194,21 @@
     box-shadow: rgba(100, 100, 111, 0.6) 0px 5px 8px 0px;
     transition: transform ease 0.5s, box-shadow ease 0.5s;
 }
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #c0b4a7;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #faba90;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ab8463;
+}
