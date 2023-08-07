@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import TileComponent from "../components/tileComponent/TileComponent";
 import axios from "axios";
-import {APIKey, BaseUrl} from "../Constants";
+import {APIKey, BaseUrl, sub_id} from "../Constants";
 
 const BreedDetailsPage = (props) => {
     const {isLoadingCallback} = props;
     const [breedData, setBreedData] = useState([]);
+    const [breedImages, setBreedImages] = useState([])
 
     useEffect(() => {
         isLoadingCallback(true);
@@ -22,6 +23,19 @@ const BreedDetailsPage = (props) => {
         fetchBreedData();
     }, []);
 
+    const fetchImagesByBreedId = async (id) => {
+        isLoadingCallback(true);
+        try {
+            const response = await axios.get(BaseUrl + 'images/search?limit=10',{
+                params: {id: id}
+            });
+            isLoadingCallback(false);
+            setBreedImages(response.data);
+        } catch (error) {
+            console.error('Error fetching cat images:', error);
+        }
+    };
+
 
     return (
         <div>
@@ -30,6 +44,8 @@ const BreedDetailsPage = (props) => {
             </div>
             <TileComponent
                 breedData={breedData}
+                breedImages={breedImages}
+                fetchImages={fetchImagesByBreedId}
             />
         </div>
     );

@@ -7,7 +7,7 @@ import axios from "axios";
 import {APIKey, BaseUrl} from "../../Constants";
 
 const ModalComponent = (props) => {
-    const { catData, isModalOpen, closeModal, isLoadingCallback, breedData } = props;
+    const {catData, isModalOpen, closeModal, isLoadingCallback, breedData, breedImages} = props;
     const [URLCopied, copyUrlToClipboard] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
 
@@ -113,8 +113,21 @@ const ModalComponent = (props) => {
                     <div className="details-container">
                         <span className="breed-details">{breedData.description}</span>
                     </div>
+                    <div className="container">
+                        <div className="row">
+                            {breedImages.map((data) => (
+                                <div className="tile col-md-3" key={data.id}>
+                                    <div className="tile-container">
+                                        <img className="tile-image" key={data.id} src={data.url} alt="Cat"/>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-
+                <div className="button-container">
+                    <button onClick={() => onCloseModalClick()}>Close</button>
+                </div>
             </Modal>
         )
     }

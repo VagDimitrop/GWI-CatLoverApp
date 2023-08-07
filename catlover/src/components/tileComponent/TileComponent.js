@@ -5,7 +5,7 @@ import InfoModal from "../infoModal/InfoModal";
 import ConfirmModal from "../confirmModal/ConfirmModal";
 
 const TileComponent = (props) => {
-    const {catData, deleteCallback, headerText, descriptionText, isLoadingCallback, breedData} = props;
+    const {catData, deleteCallback, headerText, descriptionText, isLoadingCallback, breedData, breedImages, fetchImages} = props;
     const [modalData, setModalData] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
@@ -33,15 +33,14 @@ const TileComponent = (props) => {
             setModalData(selectedEntryData);
             setConfirmModalIsOpen(true);
         } else if (window.location.pathname === '/breeds') {
-            debugger;
             let selectedEntryData = {
                 showModal: true,
                 breed: data.name,
                 description: data.description,
             }
+            fetchImages(data.id);
             setModalData(selectedEntryData);
             setModalIsOpen(true)
-            alert("Tile clicked in breeds page")
         }
     };
 
@@ -117,6 +116,7 @@ const TileComponent = (props) => {
                 </div>
                 <ModalComponent
                     breedData={modalData}
+                    breedImages={breedImages}
                     isModalOpen={modalIsOpen}
                     closeModal={closeModal}
                     isLoadingCallback={isLoadingCallback}>
