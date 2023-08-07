@@ -2,11 +2,16 @@ import React, {useEffect, useState} from 'react';
 import TileComponent from "../components/tileComponent/TileComponent";
 import axios from "axios";
 import {APIKey, BaseUrl, sub_id} from "../Constants";
+import ModalComponent from "../components/modalComponent/ModalComponent";
 
 const BreedDetailsPage = (props) => {
     const {isLoadingCallback} = props;
     const [breedData, setBreedData] = useState([]);
-    const [breedImages, setBreedImages] = useState([])
+    const [breedImages, setBreedImages] = useState([]);
+    const [modalData, setModalData] = useState([]);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+
 
     useEffect(() => {
         isLoadingCallback(true);
@@ -36,6 +41,14 @@ const BreedDetailsPage = (props) => {
         }
     };
 
+    const shouldShowModal = (data) => {
+        setModalData(data);
+        setModalIsOpen(true)
+    }
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
 
     return (
         <div>
@@ -46,7 +59,15 @@ const BreedDetailsPage = (props) => {
                 breedData={breedData}
                 breedImages={breedImages}
                 fetchImages={fetchImagesByBreedId}
+                shouldShowModal={shouldShowModal}
             />
+            <ModalComponent
+                breedData={modalData}
+                breedImages={breedImages}
+                isModalOpen={modalIsOpen}
+                closeModal={closeModal}
+                isLoadingCallback={isLoadingCallback}>
+            </ModalComponent>
         </div>
     );
 };

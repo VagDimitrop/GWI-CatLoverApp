@@ -2,11 +2,17 @@ import React, {useEffect, useState} from 'react';
 import TileComponent from "../components/tileComponent/TileComponent";
 import axios from "axios";
 import {APIKey, BaseUrl} from '../Constants';
+import { useLocation } from "react-router-dom";
+import ModalComponent from "../components/modalComponent/ModalComponent";
+
 
 const HomePage = (props) => {
     const {isLoadingCallback} = props;
     const [catData, setCatImages] = useState([]);
-    
+    const [modalData, setModalData] = useState([]);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+
     useEffect(() => {
         isLoadingCallback(true);
         const fetchCatImages = async () => {
@@ -34,6 +40,15 @@ const HomePage = (props) => {
         }
     };
 
+    const shouldShowModal = (data) => {
+        setModalData(data);
+        setModalIsOpen(true)
+    }
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
     return (
         <div>
             <div className="page-header-container">
@@ -44,10 +59,17 @@ const HomePage = (props) => {
                 headerText={'Oops'}
                 descriptionText={'This kitten is of no know breed unfortunately..'}
                 isLoadingCallback={isLoadingCallback}
+                shouldShowModal={shouldShowModal}
             />
             <button className="load-button"
                     onClick={() => onLoadMoreClick()}>Load more furry friends!
             </button>
+            <ModalComponent
+                catData={modalData}
+                isModalOpen={modalIsOpen}
+                closeModal={closeModal}
+                isLoadingCallback={isLoadingCallback}>
+            </ModalComponent>
         </div>
     );
 };

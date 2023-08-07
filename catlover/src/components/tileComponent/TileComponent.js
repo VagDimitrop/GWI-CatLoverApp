@@ -5,9 +5,8 @@ import InfoModal from "../infoModal/InfoModal";
 import ConfirmModal from "../confirmModal/ConfirmModal";
 
 const TileComponent = (props) => {
-    const {catData, deleteCallback, headerText, descriptionText, isLoadingCallback, breedData, breedImages, fetchImages} = props;
+    const {catData, deleteCallback, headerText, descriptionText, isLoadingCallback, breedData, breedImages, fetchImages, shouldShowModal} = props;
     const [modalData, setModalData] = useState([]);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
     const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false);
 
@@ -21,8 +20,7 @@ const TileComponent = (props) => {
                     description: data.breeds[0].description,
                     imageId: data.id
                 }
-                setModalData(selectedEntryData);
-                setModalIsOpen(true)
+                shouldShowModal(selectedEntryData);
             } else {
                 setInfoModalIsOpen(true)
             }
@@ -39,14 +37,11 @@ const TileComponent = (props) => {
                 description: data.description,
             }
             fetchImages(data.id);
-            setModalData(selectedEntryData);
-            setModalIsOpen(true)
+            shouldShowModal(selectedEntryData);
         }
     };
 
-    const closeModal = () => {
-        setModalIsOpen(false);
-    };
+
 
     const closeInfoModal = () => {
         setInfoModalIsOpen(false);
@@ -78,12 +73,7 @@ const TileComponent = (props) => {
                         </div>
                     </div>
                 </div>
-                <ModalComponent
-                    catData={modalData}
-                    isModalOpen={modalIsOpen}
-                    closeModal={closeModal}
-                    isLoadingCallback={isLoadingCallback}>
-                </ModalComponent>
+
                 <InfoModal
                     headerText={headerText}
                     descriptionText={descriptionText}
@@ -114,13 +104,6 @@ const TileComponent = (props) => {
                         </div>
                     </div>
                 </div>
-                <ModalComponent
-                    breedData={modalData}
-                    breedImages={breedImages}
-                    isModalOpen={modalIsOpen}
-                    closeModal={closeModal}
-                    isLoadingCallback={isLoadingCallback}>
-                </ModalComponent>
             </div>
         )
     }
