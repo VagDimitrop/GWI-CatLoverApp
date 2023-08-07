@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import TileComponent from "../components/tileComponent/TileComponent";
 import axios from "axios";
+import {APIKey, BaseUrl} from '../Constants';
 
 const HomePage = (props) => {
     const {isLoadingCallback} = props;
     const [catData, setCatImages] = useState([]);
-
-    const APIKey = 'live_Lel5oW8x7PrQ6TPSOIC2XyoQB9SSfzd4uHE4ukbENfzdOxbO3f1ojNv13BAKUHyj'
-
+    
     useEffect(() => {
         isLoadingCallback(true);
         const fetchCatImages = async () => {
             try {
-                const response = await axios.get('https://api.thecatapi.com/v1/images/search?limit=10',
+                const response = await axios.get(BaseUrl + 'images/search?limit=10',
                     {headers: {'x-api-key': APIKey}});
                 setCatImages(response.data);
                 isLoadingCallback(false);
@@ -26,7 +25,7 @@ const HomePage = (props) => {
     const onLoadMoreClick = async () => {
         isLoadingCallback(true);
         try {
-            const response = await axios.get('https://api.thecatapi.com/v1/images/search?limit=10',
+            const response = await axios.get(BaseUrl + '/images/search?limit=10',
                 {headers: {'x-api-key': APIKey}});
             setCatImages([...catData, ...response.data]);
             isLoadingCallback(false);

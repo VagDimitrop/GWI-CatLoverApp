@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart as faHeartSolid} from "@fortawesome/free-solid-svg-icons";
 import {faHeart as faHeartRegular} from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
+import {APIKey, BaseUrl} from "../../Constants";
 
 const ModalComponent = (props) => {
     const { data, isModalOpen, closeModal, isLoadingCallback } = props;
@@ -11,7 +12,6 @@ const ModalComponent = (props) => {
     const [showModal, toggleModal] = useState();
     const [isFavorite, setIsFavorite] = useState(false);
 
-    const APIKey = 'live_Lel5oW8x7PrQ6TPSOIC2XyoQB9SSfzd4uHE4ukbENfzdOxbO3f1ojNv13BAKUHyj'
 
     const modalStyles = {
         content: {
@@ -36,7 +36,7 @@ const ModalComponent = (props) => {
         if (!isFavorite) {
             isLoadingCallback(true);
             try {
-                const response = await axios.post('https://api.thecatapi.com/v1/favourites',
+                const response = await axios.post(BaseUrl + 'favourites',
                     payload,
                     {headers: {'x-api-key': APIKey}});
                 isLoadingCallback(false);

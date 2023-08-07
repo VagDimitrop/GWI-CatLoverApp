@@ -2,22 +2,20 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import TileComponent from "../components/tileComponent/TileComponent";
 import InfoModal from "../components/infoModal/InfoModal";
+import {APIKey, BaseUrl, sub_id} from '../Constants';
+
 
 const FavoritesPage = (props) => {
     const {isLoadingCallback} = props;
     const [favoritesData, setFavorites] = useState([]);
     const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
 
-
-    const APIKey = 'live_Lel5oW8x7PrQ6TPSOIC2XyoQB9SSfzd4uHE4ukbENfzdOxbO3f1ojNv13BAKUHyj'
-
-
     useEffect(() => {
         isLoadingCallback(true);
         const fetchFavorites = async () => {
             try {
-                    const response = await axios.get('https://api.thecatapi.com/v1/favourites', {
-                    params: {sub_id: 44},
+                    const response = await axios.get(BaseUrl + 'favourites', {
+                    params: {sub_id: sub_id},
                     headers: {'x-api-key': APIKey}
                 });
                 setFavorites(transformData(response.data));
@@ -45,7 +43,7 @@ const FavoritesPage = (props) => {
         let id = data.id
         isLoadingCallback(true);
         try {
-            const response = await axios.delete('https://api.thecatapi.com/v1/favourites/' + id, {
+            const response = await axios.delete(BaseUrl + 'favourites/' + id, {
                 headers: {'x-api-key': APIKey}
             });
             let updatedArray = favoritesData.filter(((element) => element.id !== id));
