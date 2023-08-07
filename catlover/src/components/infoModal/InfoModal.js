@@ -7,9 +7,9 @@ const InfoModal = (props) => {
     const modalStyles = {
         content: {
             width: '30%',
-            height: '24%',
+            height: '34%',
             position: 'absolute',
-            top: '38%',
+            top: '33%',
             left: '35%',
             borderRadius: '8px',
             backgroundColor: 'rgba(250, 240, 215, 1)'

@@ -52,10 +52,6 @@
     cursor: pointer;
 }
 
-.display-none {
-    display: none;
-}
-
 .loader-container {
     z-index: 100;
     width: 100%;
@@ -70,11 +66,8 @@
     place-content: center;
 }
 
-.page-header-container {
-    margin-bottom: 20px;
-}
-
 .page-header {
+    margin-top: 15px;
     color: #ab8463;
 }
 
@@ -86,8 +79,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 90%;
     height: 150px;
+    margin-top: 20px;
     margin-bottom: 40px;
     background-color: #CCEEBC;
     border-radius: 8px;
