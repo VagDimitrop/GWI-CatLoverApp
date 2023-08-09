@@ -12,6 +12,7 @@ const HomePage = (props) => {
     const [modalData, setModalData] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
+    const [infoModalData, setInfoModalData] = useState([]);
 
 
     useEffect(() => {
@@ -23,7 +24,13 @@ const HomePage = (props) => {
                 setCatImages(response.data);
                 isLoadingCallback(false);
             } catch (error) {
-                console.error('Error fetching cat images:', error);
+                isLoadingCallback(false);
+                let infoModalData = {
+                    headerText: 'Oops..',
+                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+                }
+                setInfoModalData(infoModalData)
+                setInfoModalIsOpen(true);
             }
         };
         fetchCatImages();
@@ -37,7 +44,13 @@ const HomePage = (props) => {
             setCatImages([...catData, ...response.data]);
             isLoadingCallback(false);
         } catch (error) {
-            console.error('Error fetching cat images:', error);
+            isLoadingCallback(false);
+            let infoModalData = {
+                headerText: 'Oops..',
+                descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+            }
+            setInfoModalData(infoModalData)
+            setInfoModalIsOpen(true);
         }
     };
 
@@ -50,7 +63,16 @@ const HomePage = (props) => {
         setModalIsOpen(false);
     };
 
-    const shouldShowInfoModal = () => {
+    const shouldShowInfoModal = (data) => {
+        if (data === false) {
+            let infoModalData = {
+                headerText: 'Oops',
+                descriptionText: 'This kitten is of no know breed unfortunately..'
+            }
+            setInfoModalData(infoModalData);
+        } else {
+            setInfoModalData(data)
+        }
         setInfoModalIsOpen(true)
     }
 
@@ -73,8 +95,8 @@ const HomePage = (props) => {
                     onClick={() => onLoadMoreClick()}>Load more furry friends!
             </button>
             <InfoModal
-                headerText={'Oops'}
-                descriptionText={'This kitten is of no know breed unfortunately..'}
+                headerText={infoModalData.headerText}
+                descriptionText={infoModalData.descriptionText}
                 isInfoModalOpen={infoModalIsOpen}
                 closeModal={closeInfoModal}>
             </InfoModal>
@@ -82,6 +104,7 @@ const HomePage = (props) => {
                 catData={modalData}
                 isModalOpen={modalIsOpen}
                 closeModal={closeModal}
+                shouldShowInfoModal={shouldShowInfoModal}
                 isLoadingCallback={isLoadingCallback}>
             </ModalComponent>
         </div>

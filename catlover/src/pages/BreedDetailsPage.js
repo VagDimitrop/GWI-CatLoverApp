@@ -3,6 +3,7 @@ import TileComponent from "../components/tileComponent/TileComponent";
 import axios from "axios";
 import {APIKey, BaseUrl, sub_id} from "../Constants";
 import ModalComponent from "../components/modalComponent/ModalComponent";
+import InfoModal from "../components/infoModal/InfoModal";
 
 const BreedDetailsPage = (props) => {
     const {isLoadingCallback} = props;
@@ -10,7 +11,8 @@ const BreedDetailsPage = (props) => {
     const [breedImages, setBreedImages] = useState([]);
     const [modalData, setModalData] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
+    const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
+    const [infoModalData, setInfoModalData] = useState([]);
 
 
     useEffect(() => {
@@ -22,7 +24,13 @@ const BreedDetailsPage = (props) => {
                 setBreedData(response.data);
                 isLoadingCallback(false);
             } catch (error) {
-                console.error('Error fetching cat images:', error);
+                isLoadingCallback(false);
+                let infoModalData = {
+                    headerText: 'Oops..',
+                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+                }
+                setInfoModalData(infoModalData)
+                setInfoModalIsOpen(true);
             }
         };
         fetchBreedData();
@@ -37,7 +45,13 @@ const BreedDetailsPage = (props) => {
             isLoadingCallback(false);
             setBreedImages(response.data);
         } catch (error) {
-            console.error('Error fetching cat images:', error);
+            isLoadingCallback(false);
+            let infoModalData = {
+                headerText: 'Oops..',
+                descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+            }
+            setInfoModalData(infoModalData)
+            setInfoModalIsOpen(true);
         }
     };
 
@@ -48,6 +62,10 @@ const BreedDetailsPage = (props) => {
 
     const closeModal = () => {
         setModalIsOpen(false);
+    };
+
+    const closeInfoModal = () => {
+        setInfoModalIsOpen(false);
     };
 
     return (
@@ -61,6 +79,12 @@ const BreedDetailsPage = (props) => {
                 fetchImages={fetchImagesByBreedId}
                 shouldShowModal={shouldShowModal}
             />
+            <InfoModal
+                headerText={infoModalData.headerText}
+                descriptionText={infoModalData.descriptionText}
+                isInfoModalOpen={infoModalIsOpen}
+                closeModal={closeInfoModal}>
+            </InfoModal>
             <ModalComponent
                 breedData={modalData}
                 breedImages={breedImages}

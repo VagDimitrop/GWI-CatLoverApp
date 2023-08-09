@@ -9,6 +9,7 @@ import ConfirmModal from "../components/confirmModal/ConfirmModal";
 const FavoritesPage = (props) => {
     const {isLoadingCallback} = props;
     const [favoritesData, setFavorites] = useState([]);
+    const [infoModalData, setInfoModalData] = useState([]);
     const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
     const [modalData, setModalData] = useState([]);
     const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false);
@@ -25,7 +26,13 @@ const FavoritesPage = (props) => {
                 setFavorites(transformData(response.data));
                 isLoadingCallback(false);
             } catch (error) {
-                console.error('Error fetching cat images:', error);
+                isLoadingCallback(false);
+                let infoModalData = {
+                    headerText: 'Oops..',
+                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+                }
+                setInfoModalData(infoModalData)
+                setInfoModalIsOpen(true);
             }
         };
         fetchFavorites();
@@ -53,9 +60,20 @@ const FavoritesPage = (props) => {
             let updatedArray = favoritesData.filter(((element) => element.id !== id));
             setFavorites(updatedArray);
             isLoadingCallback(false);
+            let infoModalData = {
+                headerText: 'Pity..',
+                descriptionText: 'You have just unfavourrrited a very good friend'
+            }
+            setInfoModalData(infoModalData)
             setInfoModalIsOpen(true);
         } catch (error) {
-            console.error('Error fetching cat images:', error);
+            isLoadingCallback(false);
+            let infoModalData = {
+                headerText: 'Oops..',
+                descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+            }
+            setInfoModalData(infoModalData)
+            setInfoModalIsOpen(true);
         }
     }
 
@@ -87,8 +105,8 @@ const FavoritesPage = (props) => {
                 shouldShowModal={shouldShowModal}
             />
             <InfoModal
-                headerText={'Pity..'}
-                descriptionText={'You have just unfavourrrited a very good friend'}
+                headerText={infoModalData.headerText}
+                descriptionText={infoModalData.descriptionText}
                 isInfoModalOpen={infoModalIsOpen}
                 closeModal={closeInfoModal}>
             </InfoModal>

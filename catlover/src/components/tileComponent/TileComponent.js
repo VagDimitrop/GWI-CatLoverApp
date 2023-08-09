@@ -16,7 +16,8 @@ const TileComponent = (props) => {
                 }
                 shouldShowModal(selectedEntryData);
             } else {
-                shouldShowInfoModal(true)
+                let selectedEntryData = false
+                shouldShowInfoModal(selectedEntryData)
             }
         } else if (window.location.pathname === '/favorites') {
             let selectedEntryData = {
