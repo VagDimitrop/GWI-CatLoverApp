@@ -2,7 +2,7 @@ import Modal from "react-modal";
 import React from "react";
 
 const InfoModal = (props) => {
-    const { isInfoModalOpen, closeModal, headerText, descriptionText } = props;
+    const {isInfoModalOpen, closeModal, headerText, descriptionText} = props;
 
     const modalStyles = {
         content: {
@@ -29,13 +29,14 @@ const InfoModal = (props) => {
             contentLabel="Minimal Modal Example"
             appElement={document.getElementById('root')}
             style={modalStyles}>
-
-            <div className="container">
-                <h1 className="modal-header">{headerText}</h1>
-                <span className="no-breed-info">{descriptionText}</span>
-            </div>
-            <div className="button-container">
-                <button onClick={() => onCloseModalClick()}>Meow!</button>
+            <div className="infoModal">
+                <div className="container">
+                    <h1 className="modal-header">{headerText}</h1>
+                    <span className="no-breed-info">{descriptionText}</span>
+                </div>
+                <div className="button-container">
+                    <button onClick={() => onCloseModalClick()}>Meow!</button>
+                </div>
             </div>
         </Modal>
     );
