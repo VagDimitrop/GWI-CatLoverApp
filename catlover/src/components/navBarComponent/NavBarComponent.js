@@ -2,6 +2,8 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 
 const NavBarComponent = () => {
+    // This component is used as our Navigation Bar.
+    // Below we have defined three Navigation Links
     return (
             <Nav>
                 <Nav.Item>
