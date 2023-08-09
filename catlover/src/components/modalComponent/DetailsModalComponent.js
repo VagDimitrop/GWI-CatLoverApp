@@ -5,7 +5,7 @@ import {faHeart as faHeartSolid} from "@fortawesome/free-solid-svg-icons";
 import {faHeart as faHeartRegular} from "@fortawesome/free-regular-svg-icons";
 import {useNavigate} from "react-router-dom";
 
-const ModalComponent = (props) => {
+const DetailsModalComponent = (props) => {
     const {catData, isModalOpen, closeModal, breedData, breedImages, addToFavoritesCallBack} = props;
     const [URLCopied, copyUrlToClipboard] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
@@ -127,4 +127,4 @@ const ModalComponent = (props) => {
     }
 };
 
-export default ModalComponent;
+export default DetailsModalComponent;
