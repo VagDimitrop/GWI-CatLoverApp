@@ -1,6 +1,8 @@
 import axios from "axios";
 import {APIKey, BaseUrl, sub_id} from "../Constants";
 
+// API request to fetch favorites of user.
+// Used when navigating to FavoritesPage.
 export const fetchFavorites = async () => {
     try {
         const response = await axios.get(BaseUrl + 'favourites', {
@@ -13,6 +15,7 @@ export const fetchFavorites = async () => {
     }
 }
 
+// API request to delete a single favorite entry of user.
 export const deleteFavorite = async (id) => {
     try {
         const response = await axios.delete(BaseUrl + 'favourites/' + id, {
@@ -24,6 +27,7 @@ export const deleteFavorite = async (id) => {
     }
 }
 
+// API request to delete a single favorite entry of user.
 export const addFavorite = async (payload) => {
     try {
         const response =  await axios.post(BaseUrl + 'favourites',
