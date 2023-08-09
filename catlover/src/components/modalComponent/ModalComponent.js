@@ -6,7 +6,7 @@ import {faHeart as faHeartRegular} from "@fortawesome/free-regular-svg-icons";
 import {useNavigate} from "react-router-dom";
 
 const ModalComponent = (props) => {
-    const {catData, isModalOpen, closeModal, isLoadingCallback, breedData, breedImages, shouldShowInfoModal, addToFavoritesCallBack} = props;
+    const {catData, isModalOpen, closeModal, breedData, breedImages, addToFavoritesCallBack} = props;
     const [URLCopied, copyUrlToClipboard] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
     const navigate = useNavigate();
@@ -35,25 +35,12 @@ const ModalComponent = (props) => {
         closeModal();
     }
 
-    async function copyTextToClipboard(text) {
-        if ('clipboard' in navigator) {
-            return await navigator.clipboard.writeText(text);
-        } else {
-            return document.execCommand('copy', true, text);
-        }
-    }
-
     const handleCopyClick = (copyText) => {
-        copyTextToClipboard(copyText)
-            .then(() => {
-                copyUrlToClipboard(true);
-                setTimeout(() => {
-                    copyUrlToClipboard(false);
-                }, 1500);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        if ('clipboard' in navigator) {
+            return navigator.clipboard.writeText(copyText);
+        } else {
+            return document.execCommand('copy', true, copyText);
+        }
     }
 
     const navigateToBreedsDetails = () => {
@@ -81,7 +68,7 @@ const ModalComponent = (props) => {
                 <div className="copy-container">
                     <span>Do you want to share this image?</span>
                     <span>Click on the button below to copy the image and share it with your friends</span>
-                    <button className="copy-url-button" onClick={() => handleCopyClick(catData.url)}>Copy image url
+                    <button className="copy-url-button" onClick={() => onCopyUrlClick(catData.url)}>Copy image url
                     </button>
                 </div>
                 <div className="button-container">
