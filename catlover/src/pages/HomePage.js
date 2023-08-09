@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import TileComponent from "../components/tileComponent/TileComponent";
-import ModalComponent from "../components/modalComponent/ModalComponent";
+import DetailsModalComponent from "../components/modalComponent/DetailsModalComponent";
 import InfoModal from "../components/infoModal/InfoModal";
 import {fetchImages} from "../requests/ImagesRequests";
 import {addFavorite} from "../requests/FavoritesRequests";
@@ -174,14 +174,14 @@ const HomePage = (props) => {
                 isInfoModalOpen={infoModalIsOpen}
                 closeModal={closeInfoModal}>
             </InfoModal>
-            <ModalComponent
+            <DetailsModalComponent
                 catData={modalData}
                 isModalOpen={modalIsOpen}
                 closeModal={closeModal}
                 shouldShowInfoModal={shouldShowInfoModal}
                 addToFavoritesCallBack={addToFavorites}
                 isLoadingCallback={isLoadingCallback}>
-            </ModalComponent>
+            </DetailsModalComponent>
         </div>
     );
 };

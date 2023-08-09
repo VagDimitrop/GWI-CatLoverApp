@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import TileComponent from "../components/tileComponent/TileComponent";
-import ModalComponent from "../components/modalComponent/ModalComponent";
+import DetailsModalComponent from "../components/modalComponent/DetailsModalComponent";
 import InfoModal from "../components/infoModal/InfoModal";
 import {fetchImagesById} from "../requests/ImagesRequests";
 import {fetchBreeds} from "../requests/BreedsRequests";
@@ -132,13 +132,13 @@ const BreedsPage = (props) => {
                 isInfoModalOpen={infoModalIsOpen}
                 closeModal={closeInfoModal}>
             </InfoModal>
-            <ModalComponent
+            <DetailsModalComponent
                 breedData={modalData}
                 breedImages={breedImages}
                 isModalOpen={modalIsOpen}
                 closeModal={closeModal}
                 isLoadingCallback={isLoadingCallback}>
-            </ModalComponent>
+            </DetailsModalComponent>
         </div>
     );
 };

@@ -51,6 +51,15 @@ const ModalComponent = (props) => {
     const navigateToBreedsDetails = () => {
         navigate("/breeds");
     }
+
+    const navigateToHome = async (data) => {
+        navigate("/home",{
+            state: {
+                imageUrl: data,
+            }
+        });
+    }
+
     // Since this component is being used both for cat data and breed data, we have two different UI implementations.
     // The condition decides according to the clause which UI should be displayed
     if (catData) {
@@ -104,6 +113,7 @@ const ModalComponent = (props) => {
                                     <div className="tile-container">
                                         <img className="tile-image" key={data.id} src={data.url} alt="Cat"/>
                                     </div>
+                                    <button onClick={() => navigateToHome(data.url)}>See more</button>
                                 </div>
                             ))}
                         </div>
