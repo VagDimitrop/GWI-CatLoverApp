@@ -4,6 +4,8 @@ import axios from "axios";
 import {APIKey, BaseUrl, sub_id} from "../Constants";
 import ModalComponent from "../components/modalComponent/ModalComponent";
 import InfoModal from "../components/infoModal/InfoModal";
+import {fetchImages, fetchImagesById} from "../requests/ImagesRequests";
+import {fetchBreeds} from "../requests/BreedsRequests";
 
 const BreedDetailsPage = (props) => {
     const {isLoadingCallback} = props;
@@ -17,33 +19,31 @@ const BreedDetailsPage = (props) => {
 
     useEffect(() => {
         isLoadingCallback(true);
-        const fetchBreedData = async () => {
-            try {
-                const response = await axios.get(BaseUrl + 'breeds',
-                    {headers: {'x-api-key': APIKey}});
-                setBreedData(response.data);
-                isLoadingCallback(false);
-            } catch (error) {
-                isLoadingCallback(false);
-                let infoModalData = {
-                    headerText: 'Oops..',
-                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
-                }
-                setInfoModalData(infoModalData)
-                setInfoModalIsOpen(true);
-            }
-        };
-        fetchBreedData();
+        loadBreeds();
     }, []);
+
+    const loadBreeds = async () => {
+        try {
+            const breeds = await fetchBreeds()
+            setBreedData(breeds);
+            isLoadingCallback(false);
+        } catch (error) {
+            isLoadingCallback(false);
+            let infoModalData = {
+                headerText: 'Oops..',
+                descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+            }
+            setInfoModalData(infoModalData)
+            setInfoModalIsOpen(true);
+        }
+    };
 
     const fetchImagesByBreedId = async (id) => {
         isLoadingCallback(true);
         try {
-            const response = await axios.get(BaseUrl + 'images/search?limit=10',{
-                params: {id: id}
-            });
+            const images = await fetchImagesById(id)
             isLoadingCallback(false);
-            setBreedImages(response.data);
+            setBreedImages(images);
         } catch (error) {
             isLoadingCallback(false);
             let infoModalData = {
