@@ -7,7 +7,7 @@ import InfoModal from "../components/infoModal/InfoModal";
 import {fetchImages, fetchImagesById} from "../requests/ImagesRequests";
 import {fetchBreeds} from "../requests/BreedsRequests";
 
-const BreedDetailsPage = (props) => {
+const BreedsPage = (props) => {
     const {isLoadingCallback} = props;
     const [breedData, setBreedData] = useState([]);
     const [breedImages, setBreedImages] = useState([]);
@@ -96,4 +96,4 @@ const BreedDetailsPage = (props) => {
     );
 };
 
-export default BreedDetailsPage;
+export default BreedsPage;
