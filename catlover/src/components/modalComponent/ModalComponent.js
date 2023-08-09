@@ -3,8 +3,6 @@ import Modal from 'react-modal';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart as faHeartSolid} from "@fortawesome/free-solid-svg-icons";
 import {faHeart as faHeartRegular} from "@fortawesome/free-regular-svg-icons";
-import axios from "axios";
-import {APIKey, BaseUrl} from "../../Constants";
 import {useNavigate} from "react-router-dom";
 
 const ModalComponent = (props) => {

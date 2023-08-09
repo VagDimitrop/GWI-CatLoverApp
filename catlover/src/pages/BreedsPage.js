@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import TileComponent from "../components/tileComponent/TileComponent";
-import axios from "axios";
-import {APIKey, BaseUrl, sub_id} from "../Constants";
 import ModalComponent from "../components/modalComponent/ModalComponent";
 import InfoModal from "../components/infoModal/InfoModal";
-import {fetchImages, fetchImagesById} from "../requests/ImagesRequests";
+import {fetchImagesById} from "../requests/ImagesRequests";
 import {fetchBreeds} from "../requests/BreedsRequests";
 
 const BreedsPage = (props) => {
