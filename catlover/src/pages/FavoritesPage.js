@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import TileComponent from "../components/tileComponent/TileComponent";
 import InfoModal from "../components/infoModal/InfoModal";
-import {APIKey, BaseUrl, sub_id} from '../Constants';
 import ConfirmModal from "../components/confirmModal/ConfirmModal";
+import {deleteFavorite, fetchFavorites} from "../requests/FavoritesRequests";
 
 
 const FavoritesPage = (props) => {
@@ -17,26 +16,24 @@ const FavoritesPage = (props) => {
 
     useEffect(() => {
         isLoadingCallback(true);
-        const fetchFavorites = async () => {
-            try {
-                    const response = await axios.get(BaseUrl + 'favourites', {
-                    params: {sub_id: sub_id},
-                    headers: {'x-api-key': APIKey}
-                });
-                setFavorites(transformData(response.data));
-                isLoadingCallback(false);
-            } catch (error) {
-                isLoadingCallback(false);
-                let infoModalData = {
-                    headerText: 'Oops..',
-                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
-                }
-                setInfoModalData(infoModalData)
-                setInfoModalIsOpen(true);
-            }
-        };
-        fetchFavorites();
+        loadFavorites();
     }, []);
+
+    const loadFavorites = async () => {
+        try {
+            const favorites = await fetchFavorites();
+            setFavorites(transformData(favorites));
+            isLoadingCallback(false);
+        } catch (error) {
+            isLoadingCallback(false);
+            let infoModalData = {
+                headerText: 'Oops..',
+                descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+            }
+            setInfoModalData(infoModalData)
+            setInfoModalIsOpen(true);
+        }
+    };
 
     const transformData = (data) => {
         let transformedData = [];
@@ -50,13 +47,11 @@ const FavoritesPage = (props) => {
         return transformedData;
     }
 
-    const deleteFavorite = async (data) => {
+    const onDeleteFavoriteClick = async (data) => {
         let id = data.id
         isLoadingCallback(true);
         try {
-            const response = await axios.delete(BaseUrl + 'favourites/' + id, {
-                headers: {'x-api-key': APIKey}
-            });
+            const favorites = await deleteFavorite(id);
             let updatedArray = favoritesData.filter(((element) => element.id !== id));
             setFavorites(updatedArray);
             isLoadingCallback(false);
@@ -84,7 +79,7 @@ const FavoritesPage = (props) => {
 
     const closeConfirmModal = (event) => {
         if (event === 'submit') {
-            deleteFavorite(modalData);
+            onDeleteFavoriteClick(modalData);
         }
         setConfirmModalIsOpen(false);
     };
@@ -101,7 +96,6 @@ const FavoritesPage = (props) => {
             </div>
             <TileComponent
                 catData={favoritesData}
-                deleteCallback={deleteFavorite}
                 shouldShowModal={shouldShowModal}
             />
             <InfoModal

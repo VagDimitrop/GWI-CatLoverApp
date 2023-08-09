@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import TileComponent from "../components/tileComponent/TileComponent";
-import axios from "axios";
-import {APIKey, BaseUrl} from '../Constants';
 import ModalComponent from "../components/modalComponent/ModalComponent";
 import InfoModal from "../components/infoModal/InfoModal";
 import {fetchImages} from "../requests/ImagesRequests";
+import {addFavorite} from "../requests/FavoritesRequests";
 
 
 const HomePage = (props) => {
@@ -67,6 +66,35 @@ const HomePage = (props) => {
         setInfoModalIsOpen(false);
     };
 
+    const addToFavorites = async (imageId, isFavorite) => {
+        const payload = {
+            image_id: imageId,
+            sub_id: "44"
+        };
+        if (!isFavorite) {
+            isLoadingCallback(true);
+            try {
+                await addFavorite(payload);
+                isLoadingCallback(false);
+
+                closeModal();
+                let infoModalData = {
+                    headerText: 'Yay!',
+                    descriptionText: 'You have just favorited a little kitten!'
+                }
+                shouldShowInfoModal(infoModalData)
+            } catch (error) {
+                isLoadingCallback(false);
+                let infoModalData = {
+                    headerText: 'Oops..',
+                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+                }
+                closeModal();
+                shouldShowInfoModal(infoModalData)
+            }
+        }
+    }
+
     return (
         <div>
             <div className="page-header-container">
@@ -92,6 +120,7 @@ const HomePage = (props) => {
                 isModalOpen={modalIsOpen}
                 closeModal={closeModal}
                 shouldShowInfoModal={shouldShowInfoModal}
+                addToFavoritesCallBack={addToFavorites}
                 isLoadingCallback={isLoadingCallback}>
             </ModalComponent>
         </div>

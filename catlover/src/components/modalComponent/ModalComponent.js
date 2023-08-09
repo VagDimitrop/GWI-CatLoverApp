@@ -8,7 +8,7 @@ import {APIKey, BaseUrl} from "../../Constants";
 import {useNavigate} from "react-router-dom";
 
 const ModalComponent = (props) => {
-    const {catData, isModalOpen, closeModal, isLoadingCallback, breedData, breedImages, shouldShowInfoModal} = props;
+    const {catData, isModalOpen, closeModal, isLoadingCallback, breedData, breedImages, shouldShowInfoModal, addToFavoritesCallBack} = props;
     const [URLCopied, copyUrlToClipboard] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
     const navigate = useNavigate();
@@ -29,34 +29,8 @@ const ModalComponent = (props) => {
     };
 
     const handleFavoriteClick = async (imageId) => {
-        const payload = {
-            image_id: imageId,
-            sub_id: "44"
-        };
-        if (!isFavorite) {
-            isLoadingCallback(true);
-            try {
-                const response = await axios.post(BaseUrl + 'favourites',
-                    payload,
-                    {headers: {'x-api-key': APIKey}});
-                isLoadingCallback(false);
-                setIsFavorite(true);
-                closeModal();
-                let infoModalData = {
-                    headerText: 'Yay!',
-                    descriptionText: 'You have just favorited a little kitten!'
-                }
-                shouldShowInfoModal(infoModalData)
-            } catch (error) {
-                isLoadingCallback(false);
-                let infoModalData = {
-                    headerText: 'Oops..',
-                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
-                }
-                closeModal();
-                shouldShowInfoModal(infoModalData)
-            }
-        }
+        addToFavoritesCallBack(imageId, isFavorite);
+        setIsFavorite(true);
     }
 
     const onCloseModalClick = () => {
