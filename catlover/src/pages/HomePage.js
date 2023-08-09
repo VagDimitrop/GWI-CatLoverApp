@@ -4,6 +4,7 @@ import axios from "axios";
 import {APIKey, BaseUrl} from '../Constants';
 import ModalComponent from "../components/modalComponent/ModalComponent";
 import InfoModal from "../components/infoModal/InfoModal";
+import {fetchImages} from "../requests/ImagesRequests";
 
 
 const HomePage = (props) => {
@@ -16,32 +17,14 @@ const HomePage = (props) => {
 
 
     useEffect(() => {
-        isLoadingCallback(true);
-        const fetchCatImages = async () => {
-            try {
-                const response = await axios.get(BaseUrl + 'images/search?limit=10',
-                    {headers: {'x-api-key': APIKey}});
-                setCatImages(response.data);
-                isLoadingCallback(false);
-            } catch (error) {
-                isLoadingCallback(false);
-                let infoModalData = {
-                    headerText: 'Oops..',
-                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
-                }
-                setInfoModalData(infoModalData)
-                setInfoModalIsOpen(true);
-            }
-        };
-        fetchCatImages();
+        loadImages();
     }, []);
 
-    const onLoadMoreClick = async () => {
+    const loadImages = async () => {
         isLoadingCallback(true);
         try {
-            const response = await axios.get(BaseUrl + '/images/search?limit=10',
-                {headers: {'x-api-key': APIKey}});
-            setCatImages([...catData, ...response.data]);
+            const images = await fetchImages();
+            setCatImages([...catData, ...images]);
             isLoadingCallback(false);
         } catch (error) {
             isLoadingCallback(false);
@@ -52,6 +35,10 @@ const HomePage = (props) => {
             setInfoModalData(infoModalData)
             setInfoModalIsOpen(true);
         }
+    };
+
+    const onLoadMoreClick = async () => {
+        loadImages();
     };
 
     const shouldShowModal = (data) => {
