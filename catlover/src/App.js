@@ -8,7 +8,11 @@ import React, {useState} from "react";
 import LoaderComponent from "./components/loaderComponent/LoaderComponent";
 
 function App() {
+    // The showLoader variable holds the data on whether the loader should be displayed or not
     const [showLoader, setShowLoader] = useState()
+
+    // This is a callback function passed to all children pages in order for them to toggle the
+    // display of the loader
     const isLoading = (data) => {
         setShowLoader(data)
     }
@@ -24,6 +28,7 @@ function App() {
             </header>
             <Router>
                 <Routes>
+                    <Route path="/" element={<HomePage isLoadingCallback = {isLoading}/>} />
                     <Route path="/home" element={<HomePage isLoadingCallback = {isLoading}/>} />
                     <Route path="/favorites" element={<FavoritesPage isLoadingCallback = {isLoading}/>} />
                     <Route path="/breeds" element={<BreedsPage isLoadingCallback = {isLoading}/>} />
