@@ -4,6 +4,7 @@ import React from "react";
 const ConfirmModal = (props) => {
     const { isConfirmModalOpen, closeModal } = props;
 
+    // The code below is used to apply custom style to the modal
     const modalStyles = {
         content: {
             width: '30%',
@@ -19,10 +20,12 @@ const ConfirmModal = (props) => {
         },
     };
 
+    // Handling click on the secondary button by calling a callback function found in FavoritesPage.js
     const onCancelClick = () => {
         closeModal('cancel'); // Pass 'cancel' as an argument for cancel button
     };
 
+    // Handling click on the primary button by calling a callback function found in FavoritesPage.js
     const onSubmitClick = () => {
         closeModal('submit'); // Pass 'proceed' as an argument for proceed button
     };

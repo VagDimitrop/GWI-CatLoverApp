@@ -4,6 +4,7 @@ import React from "react";
 const InfoModal = (props) => {
     const {isInfoModalOpen, closeModal, headerText, descriptionText} = props;
 
+    // The code below is used to apply custom style to the modal
     const modalStyles = {
         content: {
             width: '30%',
@@ -19,6 +20,7 @@ const InfoModal = (props) => {
         },
     };
 
+    // Handling click on the button by calling a callback function found in HomePage.js, BreedsPage.js and FavoritesPage.js
     const onCloseModalClick = () => {
         closeModal();
     }

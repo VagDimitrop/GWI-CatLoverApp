@@ -11,6 +11,7 @@ const ModalComponent = (props) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const navigate = useNavigate();
 
+    // The code below is used to apply custom style to the modal
     const modalStyles = {
         content: {
             width: '50%',
@@ -26,16 +27,19 @@ const ModalComponent = (props) => {
         },
     };
 
+    // Handling click on the heart icon by calling a callback function found in HomePage.js
     const handleFavoriteClick = async (imageId) => {
         addToFavoritesCallBack(imageId, isFavorite);
         setIsFavorite(true);
     }
 
+    // Handling click on "close" button by calling a callback function found in HomePage.js
     const onCloseModalClick = () => {
         closeModal();
     }
 
-    const handleCopyClick = (copyText) => {
+    // Handling click on "copy URL" button by copying image url to clipboard
+    const onCopyUrlClick = (copyText) => {
         if ('clipboard' in navigator) {
             return navigator.clipboard.writeText(copyText);
         } else {
@@ -43,9 +47,12 @@ const ModalComponent = (props) => {
         }
     }
 
+    // Handling click on "see more breeds" button by navigating to BreedsPage
     const navigateToBreedsDetails = () => {
         navigate("/breeds");
     }
+    // Since this component is being used both for cat data and breed data, we have two different UI implementations.
+    // The condition decides according to the clause which UI should be displayed
     if (catData) {
         return (
             <Modal
