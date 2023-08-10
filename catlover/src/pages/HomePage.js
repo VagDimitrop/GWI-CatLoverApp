@@ -26,6 +26,9 @@ const HomePage = (props) => {
     // The infoModalData variable holds the data to be displayed in the info modal.
     const [infoModalData, setInfoModalData] = useState([]);
 
+    const location = useLocation();
+    const [receivedData, setReceivedData] = useState(location.state)
+
     // Initial fetch of images by calling the loadImages function.
     useEffect(() => {
 
@@ -62,8 +65,11 @@ const HomePage = (props) => {
             }
         };
         loadImages();
+        
+        if (receivedData){
+            shouldShowModal(receivedData)
+        }
     }, []);
-
 
     // Handles the click on the "Load More" button found in the bottom of the Home page making a new request to the
     // server identical to the one inside the useEffect().

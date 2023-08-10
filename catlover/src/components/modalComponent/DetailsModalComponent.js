@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart as faHeartSolid} from "@fortawesome/free-solid-svg-icons";
 import {faHeart as faHeartRegular} from "@fortawesome/free-regular-svg-icons";
 import {useNavigate} from "react-router-dom";
+import TileComponent from "../tileComponent/TileComponent";
 
 const DetailsModalComponent = (props) => {
     const {catData, isModalOpen, closeModal, breedData, breedImages, addToFavoritesCallBack} = props;
@@ -52,10 +53,13 @@ const DetailsModalComponent = (props) => {
         navigate("/breeds");
     }
 
-    const navigateToHome = async (data) => {
+    const navigateToHome = async (data, breedData) => {
         navigate("/home",{
             state: {
-                imageUrl: data,
+                url: data.url,
+                breed: breedData.breed,
+                description: breedData.description,
+                shouldBeIgnored: false
             }
         });
     }
