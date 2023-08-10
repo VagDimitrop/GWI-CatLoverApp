@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const TileComponent = (props) => {
-    const {catData, breedData, fetchImages, shouldShowModal, shouldShowInfoModal} = props;
+    const {catData, breedData, fetchImages, shouldShowModal, shouldShowInfoModal, breedImages, redirectToHomePage} = props;
 
     // Since this component is beeing used across all three pages, we have to find in which page the user is and build the data to be diplayed accordingly.
     const onTileClick = (data) => {
@@ -61,7 +61,13 @@ const TileComponent = (props) => {
                         <div className="row">
                             {catData.map((data) => (
                                 <div className="tile col-md-3"
-                                     onClick={() => onTileClick(data)}
+                                     onClick={() => {
+                                         if (redirectToHomePage) {
+                                             redirectToHomePage(data ,breedData)
+                                         } else {
+                                             onTileClick(data)
+                                         }
+                                     }}
                                      key={data.id}>
 
                                     <div className="tile-container">

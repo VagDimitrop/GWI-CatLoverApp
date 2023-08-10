@@ -101,24 +101,11 @@ const DetailsModalComponent = (props) => {
                 appElement={document.getElementById('root')}
                 style={modalStyles}>
 
-                <div className="container">
-                    <h2 className="modal-header">{breedData.breed}</h2>
-                    <div className="details-container">
-                        <span className="breed-details">{breedData.description}</span>
-                    </div>
-                    <div className="container">
-                        <div className="row">
-                            {breedImages.map((data) => (
-                                <div className="tile col-md-3" key={data.id}>
-                                    <div className="tile-container">
-                                        <img className="tile-image" key={data.id} src={data.url} alt="Cat"/>
-                                    </div>
-                                    <button onClick={() => navigateToHome(data.url)}>See more</button>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                <TileComponent
+                    catData={breedImages}
+                    breedData={breedData}
+                    redirectToHomePage={navigateToHome}
+                />
                 <div className="button-container">
                     <button onClick={() => onCloseModalClick()}>Close</button>
                 </div>
