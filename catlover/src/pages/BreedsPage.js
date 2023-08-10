@@ -29,38 +29,38 @@ const BreedsPage = (props) => {
 
     // Initial fetch of breeds by calling the loadBreeds function.
     useEffect(() => {
+        const loadBreeds = async () => {
+            // Calling the isLoadingCallback callBack function in order to display the loader.
+            isLoadingCallback(true);
+
+            try {
+                // Calling the fetchBreeds function from the requests/BreedsRequests file.
+                const breeds = await fetchBreeds()
+
+                // Using the setBreedData in order to add the breeds to breedData.
+                setBreedData(breeds);
+
+                // Calling the isLoadingCallback callBack function in order to hide the loader.
+                isLoadingCallback(false);
+            } catch (error) {
+                // Calling the isLoadingCallback callBack function in order to hide the loader.
+                isLoadingCallback(false);
+
+                // Initialising data for the info modal that informs the user that there has been some server error.
+                let infoModalData = {
+                    headerText: 'Oops..',
+                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+                }
+                // Setting the info modal data.
+                setInfoModalData(infoModalData)
+
+                // And lastly displaying the info modal.
+                setInfoModalIsOpen(true);
+            }
+        };
         loadBreeds();
     }, []);
 
-    const loadBreeds = async () => {
-        // Calling the isLoadingCallback callBack function in order to display the loader.
-        isLoadingCallback(true);
-
-        try {
-            // Calling the fetchBreeds function from the requests/BreedsRequests file.
-            const breeds = await fetchBreeds()
-
-            // Using the setBreedData in order to add the breeds to breedData.
-            setBreedData(breeds);
-
-            // Calling the isLoadingCallback callBack function in order to hide the loader.
-            isLoadingCallback(false);
-        } catch (error) {
-            // Calling the isLoadingCallback callBack function in order to hide the loader.
-            isLoadingCallback(false);
-
-            // Initialising data for the info modal that informs the user that there has been some server error.
-            let infoModalData = {
-                headerText: 'Oops..',
-                descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
-            }
-            // Setting the info modal data.
-            setInfoModalData(infoModalData)
-
-            // And lastly displaying the info modal.
-            setInfoModalIsOpen(true);
-        }
-    };
 
     // This function is invoked from the tile component when the user clicks on one of the breed tiles.
     // We proceed by fetching 10 random images of this specific breed by calling the fetchImagesById function

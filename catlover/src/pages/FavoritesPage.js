@@ -26,41 +26,42 @@ const FavoritesPage = (props) => {
 
     // Initial fetch of favorites by calling the loadFavorites function.
     useEffect(() => {
+        const loadFavorites = async () => {
+            // Calling the isLoadingCallback callBack function in order to display the loader.
+            isLoadingCallback(true);
+            try {
+                // Calling the fetchImages function from the requests/FavoritesRequests file.
+                const favorites = await fetchFavorites();
+
+                // Using the setFavorites in order to add the favorites to favoritesData.
+                // Since we use the tile component in this page too and the data between the HomePage and the FavoritesPage are not
+                // of the same format, we have to transform the data, in order for the tile component to accept them
+                setFavorites(transformData(favorites));
+
+                // Calling the isLoadingCallback callBack function in order to hide the loader.
+
+                isLoadingCallback(false);
+            } catch (error) {
+
+                // Calling the isLoadingCallback callBack function in order to hide the loader.
+                isLoadingCallback(false);
+
+                // Initialising data for the info modal that informs the user that there has been some server error.
+                let infoModalData = {
+                    headerText: 'Oops..',
+                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+                }
+                // Setting the info modal data.
+                setInfoModalData(infoModalData)
+
+                // And lastly displaying the info modal.
+                setInfoModalIsOpen(true);
+            }
+        };
         loadFavorites();
     }, []);
 
-    const loadFavorites = async () => {
-        // Calling the isLoadingCallback callBack function in order to display the loader.
-        isLoadingCallback(true);
-        try {
-            // Calling the fetchImages function from the requests/FavoritesRequests file.
-            const favorites = await fetchFavorites();
 
-            // Using the setFavorites in order to add the favorites to favoritesData.
-            // Since we use the tile component in this page too and the data between the HomePage and the FavoritesPage are not
-            // of the same format, we have to transform the data, in order for the tile component to accept them
-            setFavorites(transformData(favorites));
-
-            // Calling the isLoadingCallback callBack function in order to hide the loader.
-
-            isLoadingCallback(false);
-        } catch (error) {
-
-            // Calling the isLoadingCallback callBack function in order to hide the loader.
-            isLoadingCallback(false);
-
-            // Initialising data for the info modal that informs the user that there has been some server error.
-            let infoModalData = {
-                headerText: 'Oops..',
-                descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
-            }
-            // Setting the info modal data.
-            setInfoModalData(infoModalData)
-
-            // And lastly displaying the info modal.
-            setInfoModalIsOpen(true);
-        }
-    };
 
     // This is the function used above to transform the data for the tile component.
     const transformData = (data) => {

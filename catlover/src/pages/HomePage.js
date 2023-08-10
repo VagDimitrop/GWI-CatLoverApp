@@ -4,6 +4,7 @@ import DetailsModalComponent from "../components/modalComponent/DetailsModalComp
 import InfoModal from "../components/infoModal/InfoModal";
 import {fetchImages} from "../requests/ImagesRequests";
 import {addFavorite} from "../requests/FavoritesRequests";
+import {useLocation} from "react-router-dom";
 
 
 const HomePage = (props) => {
@@ -27,11 +28,46 @@ const HomePage = (props) => {
 
     // Initial fetch of images by calling the loadImages function.
     useEffect(() => {
+
+        const loadImages = async () => {
+            // Calling the isLoadingCallback callBack function in order to display the loader.
+            isLoadingCallback(true);
+
+            try {
+                // Calling the fetchImages function from the requests/ImagesRequests file.
+                const images = await fetchImages();
+
+                // Using the setCatImages in order to add the newly fetched images to catData.
+                // Using the spread syntax because the images are retrieved as an array
+                setCatImages([...catData, ...images]);
+
+                // Calling the isLoadingCallback callBack function in order to hide the loader.
+                isLoadingCallback(false);
+
+            } catch (error) {
+                // Calling the isLoadingCallback callBack function in order to hide the loader.
+                isLoadingCallback(false);
+
+                // Initialising data for the info modal that informs the user that there has been some server error.
+                let infoModalData = {
+                    headerText: 'Oops..',
+                    descriptionText: 'The canines running the server did not do a very good job here.. Apologies!'
+                }
+
+                // Setting the info modal data.
+                setInfoModalData(infoModalData)
+
+                // And lastly displaying the info modal.
+                setInfoModalIsOpen(true);
+            }
+        };
         loadImages();
     }, []);
 
 
-    const loadImages = async () => {
+    // Handles the click on the "Load More" button found in the bottom of the Home page making a new request to the
+    // server identical to the one inside the useEffect().
+    const onLoadMoreClick = async () => {
         // Calling the isLoadingCallback callBack function in order to display the loader.
         isLoadingCallback(true);
 
@@ -62,11 +98,6 @@ const HomePage = (props) => {
             // And lastly displaying the info modal.
             setInfoModalIsOpen(true);
         }
-    };
-
-    // Handles the click on the "Load More" button found in the bottom of the Home page by calling the loadImages function above
-    const onLoadMoreClick = async () => {
-        loadImages();
     };
 
     // This is the callback function invoked by the tile component.
