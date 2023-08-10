@@ -26,6 +26,8 @@ const HomePage = (props) => {
     // The infoModalData variable holds the data to be displayed in the info modal.
     const [infoModalData, setInfoModalData] = useState([]);
 
+    // The receivedData variable holds the data that has been passed from the breeds page,
+    // when the user clicks on one of the images of a specific breed.
     const location = useLocation();
     const [receivedData, setReceivedData] = useState(location.state)
 
@@ -65,8 +67,13 @@ const HomePage = (props) => {
             }
         };
         loadImages();
-        
+
+        // Here we check if we organically landed on home page or if we were redirected from the breeds page
+        // If the received is populated with data, then we have been redirected from the breeds page, meaning
+        // that the details modal should be displayed along with the details of the breed.
         if (receivedData){
+
+            // We use the shouldShowModal function that that sets the modal data and also triggers the modal to display.
             shouldShowModal(receivedData)
         }
     }, []);
