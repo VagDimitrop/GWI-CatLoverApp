@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Router , Routes, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import NavBarComponent from "./components/navBarComponent/NavBarComponent";
 import HomePage from "./pages/HomePage";
 import FavoritesPage from "./pages/FavoritesPage"
@@ -28,7 +28,7 @@ function App() {
             </header>
             <Router>
                 <Routes>
-                    <Route path="/" element={<HomePage isLoadingCallback = {isLoading}/>} />
+                    <Route path="*" element={<Navigate to='/home' replace />} />
                     <Route path="/home" element={<HomePage isLoadingCallback = {isLoading}/>} />
                     <Route path="/favorites" element={<FavoritesPage isLoadingCallback = {isLoading}/>} />
                     <Route path="/breeds" element={<BreedsPage isLoadingCallback = {isLoading}/>} />
