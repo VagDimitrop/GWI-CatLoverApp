@@ -58,6 +58,7 @@ const DetailsModalComponent = (props) => {
     const navigateToHome = async (data, breedData) => {
         navigate("/home", {
             state: {
+                imageId: data.id,
                 url: data.url,
                 breed: breedData.breed,
                 description: breedData.description,
