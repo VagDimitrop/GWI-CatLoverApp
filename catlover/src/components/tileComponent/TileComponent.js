@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const TileComponent = (props) => {
-    const {catData, breedData, fetchImages, shouldShowModal, shouldShowInfoModal, breedImages, redirectToHomePage} = props;
+    const {catData, breedData, fetchImages, shouldShowModal, shouldShowInfoModal, redirectToHomePage} = props;
 
     // Since this component is beeing used across all three pages, we have to find in which page the user is and build the data to be diplayed accordingly.
     const onTileClick = (data) => {
@@ -55,50 +55,43 @@ const TileComponent = (props) => {
     // The condition decides accordingly which UI should be displayed
     if (catData) {
         return (
-            <div>
-                <div className="gallery-container">
-                    <div className="container">
-                        <div className="row">
-                            {catData.map((data) => (
-                                <div className="tile col-md-3"
-                                     onClick={() => {
-                                         if (redirectToHomePage) {
-                                             redirectToHomePage(data ,breedData)
-                                         } else {
-                                             onTileClick(data)
-                                         }
-                                     }}
-                                     key={data.id}>
+            <div className="gallery-container container">
+                <div className="row">
+                    {catData.map((data) => (
+                        <div className="tile col-md-3"
+                             onClick={() => {
+                                 if (redirectToHomePage) {
+                                     redirectToHomePage(data, breedData)
+                                 } else {
+                                     onTileClick(data)
+                                 }
+                             }}
+                             key={data.id}>
 
-                                    <div className="tile-container">
-                                        <img className="tile-image" key={data.id} src={data.url} alt="Cat"/>
-                                    </div>
-                                </div>
-                            ))}
+                            <div className="tile-container">
+                                <img className="tile-image" key={data.id} src={data.url} alt="Cat"/>
+                            </div>
                         </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         );
     } else if (breedData) {
         return (
-            <div>
-                <div className="gallery-container">
-                    <div className="container">
-                        <div className="row">
-                            {breedData.map((data) => (
-                                <div className="tile col-md-3"
-                                     onClick={() => onTileClick(data)}
-                                     key={data.id}>
-                                    <div className="tile-container">
-                                        <span>{data.name}</span>
-                                    </div>
-                                </div>
-                            ))}
+            <div className="gallery-container container">
+                <div className="row">
+                    {breedData.map((data) => (
+                        <div className="tile col-md-3"
+                             onClick={() => onTileClick(data)}
+                             key={data.id}>
+                            <div className="tile-container">
+                                <span>{data.name}</span>
+                            </div>
                         </div>
-                    </div>
+                    ))}
                 </div>
             </div>
+
         )
     }
 };

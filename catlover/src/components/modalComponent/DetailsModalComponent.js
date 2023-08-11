@@ -8,8 +8,8 @@ import TileComponent from "../tileComponent/TileComponent";
 
 const DetailsModalComponent = (props) => {
     const {catData, isModalOpen, closeModal, breedData, breedImages, addToFavoritesCallBack} = props;
-    const [URLCopied, copyUrlToClipboard] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
+
     const navigate = useNavigate();
 
     // The code below is used to apply custom style to the modal
