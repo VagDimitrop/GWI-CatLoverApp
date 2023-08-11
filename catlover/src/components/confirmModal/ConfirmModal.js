@@ -2,7 +2,7 @@ import Modal from "react-modal";
 import React from "react";
 
 const ConfirmModal = (props) => {
-    const { isConfirmModalOpen, closeModal } = props;
+    const {isConfirmModalOpen, closeModal} = props;
 
     // The code below is used to apply custom style to the modal
     const modalStyles = {

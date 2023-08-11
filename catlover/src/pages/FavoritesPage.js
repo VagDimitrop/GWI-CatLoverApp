@@ -62,18 +62,17 @@ const FavoritesPage = (props) => {
     }, []);
 
 
-
     // This is the function used above to transform the data for the tile component.
     const transformData = (data) => {
         let transformedData = [];
 
         // Iterating through each entry
-        data.forEach( (element) => {
+        data.forEach((element) => {
 
             // Creating an acceptable from the tile component object
             let entry = {
-                id : element.id,
-                url : element.image.url
+                id: element.id,
+                url: element.image.url
             }
 
             // Pushing this object to the array that will be passed to the tile component to map
@@ -157,7 +156,8 @@ const FavoritesPage = (props) => {
         <div>
             <div className="page-header-container">
                 <h1 className="page-header">Your favorite cat images</h1>
-                <span className="page-text">By clicking on the image, you can remove the image from your favorites</span>
+                <span
+                    className="page-text">By clicking on the image, you can remove the image from your favorites</span>
             </div>
             <TileComponent
                 catData={favoritesData}

@@ -71,7 +71,7 @@ const HomePage = (props) => {
         // Here we check if we organically landed on home page or if we were redirected from the breeds page
         // If the received is populated with data, then we have been redirected from the breeds page, meaning
         // that the details modal should be displayed along with the details of the breed.
-        if (receivedData){
+        if (receivedData) {
 
             // We use the shouldShowModal function that that sets the modal data and also triggers the modal to display.
             shouldShowModal(receivedData)

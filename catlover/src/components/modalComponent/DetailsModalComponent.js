@@ -56,7 +56,7 @@ const DetailsModalComponent = (props) => {
     // This function is used from the tile component as a callback function.
     // Its functionality is to store the data of the breed and the image clicked, pass them and navigate on to home page.
     const navigateToHome = async (data, breedData) => {
-        navigate("/home",{
+        navigate("/home", {
             state: {
                 url: data.url,
                 breed: breedData.breed,
